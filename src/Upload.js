@@ -3,6 +3,7 @@ import axios from "axios";
 import './Upload.css';
 //import { envodeURIComponent } from 'querystring';
 
+
 const Upload = () => {
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState("");
@@ -52,7 +53,7 @@ const Upload = () => {
     const handleDownload = async (fileName) => {
         //const encodedFileName = encodeURIComponent(fileName);
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/download/${fileName}`, {
+            const response = await axios.get(`http://127.0.0.1:5000/download/${encodeURIComponent(fileName)}`, {
                 responseType: 'blob'
             });
             const url = window.URL.createObjectURL(response.data);
@@ -87,7 +88,7 @@ const Upload = () => {
             <button onClick={handleUpload}>Upload</button>
             {loading && <div className="loader"></div>}
             <p>{message}</p>
-            <h2>Uploaded Files</h2>
+            <h2>Contents of the container: </h2>
             <ul>
                 {files.map(file => (
                     <li key={file.id}>
